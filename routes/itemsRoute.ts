@@ -9,7 +9,7 @@ router.get("/", (_, res) => {
 
 router.get("/:itemIndex", (req, res) => {
   const index = req.params.itemIndex
-  res.json({ items: items[index] })
+  res.json({ items: items[Number(index)] })
 })
 
 export default router
