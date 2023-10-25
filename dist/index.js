@@ -1,14 +1,19 @@
 import express from "express";
 import itemsRoute from "./routes/itemsRoute.js";
+import productsRoute from "./routes/productsRoute.js";
 import { loggingMiddleware } from "./middlewares/logging.js";
-import { errorLoggingMiddleware } from "./middlewares/error.js";
+import { apiErrorHandler } from "./middlewares/error.js";
+import { routeNotFound } from "./middlewares/routeNotFound.js";
 const PORT = 8080;
 const app = express();
-app.get("/hello", loggingMiddleware, (req, res) => {
+app.use(express.json());
+app.get("/hello", loggingMiddleware, (_, res) => {
     res.json({ msg: "hello, from Express.js!" });
 });
-app.use("/items", itemsRoute);
-app.use(errorLoggingMiddleware);
+app.use("/api/v1/items", itemsRoute);
+app.use("/api/v1/products", productsRoute);
+app.use(apiErrorHandler);
+app.use(routeNotFound);
 app.listen(PORT, () => {
     console.log(`👀 app is running at localhost:${PORT}`);
 });
