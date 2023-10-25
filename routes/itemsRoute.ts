@@ -29,7 +29,7 @@ function createItemHandler(req: Request, res: Response, next: NextFunction) {
   // Check validation...
   if (!item) {
     next(ApiError.badRequest("Please, provide {item: number} as a property"))
-    return
+    return;
   }
 
   createItemService(item)
