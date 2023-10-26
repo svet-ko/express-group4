@@ -2,6 +2,7 @@ import express from "express"
 
 import itemsRoute from "./routes/itemsRoute.js"
 import productsRoute from "./routes/productsRoute.js"
+import usersRoute from "./routes/usersRoute.js"
 import { loggingMiddleware } from "./middlewares/logging.js"
 import { apiErrorHandler } from "./middlewares/error.js"
 import { routeNotFound } from "./middlewares/routeNotFound.js"
@@ -17,6 +18,7 @@ app.get("/hello", loggingMiddleware, (_, res) => {
 
 app.use("/api/v1/items", itemsRoute)
 app.use("/api/v1/products", productsRoute)
+app.use("/api/v1/users", usersRoute)
 
 app.use(apiErrorHandler)
 app.use(routeNotFound)
