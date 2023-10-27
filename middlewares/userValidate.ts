@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
-const userSchema = z.object({
+export const userSchema = z.object({
   name: z.string({
     required_error: "Name is required",
   }),
-  /*role: z.enum(["customer", "admin"], {
+  role: z.enum(["customer", "admin"], {
     required_error: "Role is required and must be 'customer' or 'admin'",
-  }),*/
+  }),
   /*email: z.string().email({
     required_error: "Email is required and must be a valid email",
   }),*/

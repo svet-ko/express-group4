@@ -7,17 +7,8 @@ const router = express.Router()
 
 router.get("/", UsersController.getAllUsers)
 router.get("/:userId", UsersController.getOneUser)
-router.post("/signup", validateUser, UsersController.createOneUser)
-//router.get("/login", validateUser, UserController.login)
+router.post("/signup", validateUser, UsersController.createUser)
+router.put("/", validateUser, UsersController.updateUser)
+router.delete("/:userId", UsersController.deleteUser)
 
-export default router
-
-/*
-import { signupHandler, loginHandler } from '../controllers/userController';
-
-const router = express.Router();
-
-router.post('/signup', signupHandler);
-router.post('/login', loginHandler);
-
-export default router;*/
+export default router;

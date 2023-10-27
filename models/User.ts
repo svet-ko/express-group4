@@ -1,7 +1,7 @@
 import { User } from "../types/user.js"
 
 export class UsersRepo {
-  users = [
+  users: User[] = [
     {
         id: 1,
         name: "Ieva",
@@ -20,17 +20,33 @@ export class UsersRepo {
     }  
   ]
 
-  getOne(userId: number) {
+  
+  getAllUsers() {
+    return this.users
+  }
+
+  getUserById(userId: number) {
     const product = this.users.find((user) => user.id === userId)
     return product
   }
 
-  getAll() {
-    return this.users
+  checkUserByNameAndEmail(name: string, email: string){
+    return this.users.some(user => user.name === name && user.email === email);
   }
-
-  createOne(newUser: User) {
+  
+  createUser(newUser: User) {
     this.users = [...this.users, newUser]
     return newUser
   }
+
+  updateUser(index: number, updatedUser: User){
+    this.users.splice(index, 1, updatedUser)
+    return updatedUser
+  }
+
+  deleteUser(index: number){
+    this.users.splice(index, 1)
+    return this.users
+  }
+
 }

@@ -1,8 +1,5 @@
-export type User = {
-    id: number,
-    name: string,
-    role: 'customer' | 'admin',
-    email: string,
-    password: string,
-    avatar: string
-}
+import { z } from "zod";
+import { userSchema } from "../middlewares/userValidate.js";
+
+export type UserDTO = z.infer<typeof userSchema>
+export type User = UserDTO & {id: number}
