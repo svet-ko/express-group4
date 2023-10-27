@@ -1,6 +1,8 @@
 import express from "express"
 
-import { loggingMiddleware } from "./middlewares/logging.js"
+import itemsRoute from "./routes/itemsRoute.js"
+import productsRoute from "./routes/productsRoute1.js"
+import { loggingMiddleware } from "./middlewares/logging1.js"
 import { apiErrorHandler } from "./middlewares/error.js"
 import { routeNotFound } from "./middlewares/routeNotFound.js"
 import usersRoute from "./routes/usersRoute.js"

@@ -1,25 +1,23 @@
-import { Product } from "../types/products.js"
+import { Product, VProduct } from "../types/products1.js";
+import { generateId } from "../utils/generateId.js";
 
-// Simulating a DataBase
 export class ProductRepo {
-  products = [
+  products: Product[] = [
     {
       id: 1,
-      name: "Laptop",
-      image: "https://m.media-amazon.com/images/I/81KoSSAwH2L._SL1500_.jpg",
-      description: "High-performance laptop for all your needs.",
-      categories: [1, 2],
-      variants: ["8GB RAM", "16GB RAM"],
-      sizes: ["13-inch", "15-inch"],
+      title: "Cool Hoody",
+      price: 60,
+      description: "Cool hoodie for your good boy",
+      images: ["https://i.imgur.com/p8AjjXS.jpeg"],
+      category: 17,
     },
     {
       id: 2,
-      name: "Smartphone",
-      image: "https://m.media-amazon.com/images/I/81SigpJN1KL._SL1500_.jpg",
-      description: "Latest smartphone with advanced features.",
-      categories: [1, 3],
-      variants: ["64GB", "128GB"],
-      sizes: [],
+      title: "Warm Hoody",
+      price: 10,
+      description: "A warm hoodie to keep your dog warm and cozy!",
+      images: ["https://i.imgur.com/LlMBmIX.jpeg"],
+      category: 17,
     },
   ]
 
@@ -32,17 +30,21 @@ export class ProductRepo {
     return this.products
   }
 
-  createOne(newProduct: Product) {
-    this.products = [...this.products, newProduct]
-    return newProduct
+  createOne(newProduct: VProduct) {
+    const id = generateId(this.products);
+    const product: Product = {id, ...newProduct};
+    this.products = [...this.products, product]
+    console.log(this.products);
+    return product;
   }
 
   deleteOne(productId: number) {
     const product = this.products.find((product) => product.id === productId);
+    const index = this.products.findIndex((products) => products.id === productId);
     if (!product) {
       return
     }
-    this.products.splice(product.id, 1);
+    this.products.splice(index, 1);
 
     return product
   }
@@ -63,18 +65,5 @@ export class ProductRepo {
 
     this.products = updatedProducts;
     return updatedProduct;
-
-    // const updatedProductIndex = this.products.findIndex(product => product.id === productId);
-
-    // if (updatedProductIndex === -1) {
-    //   return;
-    // }
-
-    // this.products[updatedProductIndex] = {
-    //   ...this.products[updatedProductIndex],
-    //   ...updatesForProduct
-    // }
-
-    // return this.products[updatedProductIndex];
   }
 }

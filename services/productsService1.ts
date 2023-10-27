@@ -1,11 +1,10 @@
 import { ProductRepo } from "../models/Product1.js"
-import { Product } from "../types/products.js"
+import { VProduct } from "../types/products1.js"
 
 const productsRepo = new ProductRepo()
 
 function findAll() {
   const products = productsRepo.findAll()
-
   return products
 }
 
@@ -15,7 +14,7 @@ function findOne(productId: number) {
   return product
 }
 
-function createOne(product: Product) {
+function createOne(product: VProduct) {
   const newProduct = productsRepo.createOne(product)
 
   return newProduct
@@ -27,12 +26,11 @@ function deleteOne(productId: number) {
   return deletedProduct;
 }
 
-function updateOne(productId: number, updatesForProduct: Partial<Product>) {
+function updateOne(productId: number, updatesForProduct: Partial<VProduct>) {
   const updatedProduct = productsRepo.updateOne(productId, updatesForProduct);
 
   return updatedProduct;
 }
-
 
 export default {
   findOne,
