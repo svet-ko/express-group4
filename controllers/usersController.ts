@@ -15,13 +15,13 @@ function getAllUsers(
   res.json({ users });
 }
 
-function getOneUser(
+function getUserById(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   const userId = Number(req.params.userId);
-  const user = UserService.getOneUser(userId);
+  const user = UserService.getUserById(userId);
   if (!user) {
     next(ApiError.resourceNotFound("User not found."));
     return;
@@ -63,9 +63,9 @@ function updateUser(
   ) {
       const id = Number(req.params.userId);
       const userData = req.body;
-      const user = UserService.getOneUser(id);
+      const user = UserService.getUserById(id);
       if (!user) {
-        next(ApiError.resourceNotFound("User can't be updated"));
+        next(ApiError.resourceNotFound("User not found"));
         return;
       }
       UserService.updateUser(id, userData);
@@ -78,18 +78,18 @@ function deleteUser(
   next: NextFunction
   ) {
       const id = Number(req.params.userId);
-      const usersData = UserService.getOneUser(id);
-      if (!usersData) {
+      const user = UserService.getUserById(id);
+      if (!user) {
         next(ApiError.resourceNotFound("User that you are trying to deleter does not exist")); 
         return;
       }
       UserService.deleteUser(id);
-      res.status(200).json(usersData);
+      res.status(200).json(user);
     }
 
 export default {
   getAllUsers,
-  getOneUser,
+  getUserById,
   login,
   createUser,
   updateUser,

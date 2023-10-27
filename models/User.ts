@@ -8,7 +8,7 @@ export class UsersRepo {
         role: "admin",
         email: "ieva@email.com",
         password: "admin123",
-        avatar: ""
+        avatar: "https://api.lorem.space/image/face?w=640&h=480&r=867"
     },
     {
         id: 2,
@@ -16,7 +16,7 @@ export class UsersRepo {
         role: "customer",
         email: "user@email.com",
         password: "123123",
-        avatar: ""
+        avatar: "https://api.lorem.space/image/face?w=640&h=480&r=867"
     }  
   ]
   
@@ -25,8 +25,8 @@ export class UsersRepo {
   }
 
   getUserById(userId: number) {
-    const product = this.users.find((user) => user.id === userId)
-    return product
+    const user = this.users.find((user) => user.id === userId)
+    return user;
   }
 
   checkUserByEmailAndPassword(password: string, email: string){
@@ -38,18 +38,35 @@ export class UsersRepo {
   }
   
   createUser(newUser: User) {
-    this.users = [...this.users, newUser]
-    return newUser
+    this.users = [...this.users, newUser];
+    return newUser;
   }
 
-  updateUser(index: number, updatedUser: User){
-    this.users.splice(index, 1, updatedUser)
-    return updatedUser
+  updateUser(id: number, userUpdates: Partial<User>){
+      let updatedUser = undefined;
+      const updatedUsers = this.users.map((user) => {
+        if (user.id === id) {
+          updatedUser = {
+            ...user,
+            ...userUpdates
+          }
+          return updatedUser;
+        }
+        return user;
+      });
+  
+      this.users = updatedUsers;
+      return updatedUsers;
   }
 
-  deleteUser(index: number){
-    this.users.splice(index, 1)
-    return this.users
+  deleteUser(id: number){
+    const user = this.users.find(user => user.id === id);
+    const index = this.users.findIndex((user) => user.id === id);
+    if (!user) {
+      return
+    }
+    this.users.splice(index, 1);
+    return user;
   }
 
 }
