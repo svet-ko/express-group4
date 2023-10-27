@@ -1,8 +1,8 @@
 import express from "express"
 
 import itemsRoute from "./routes/itemsRoute.js"
-import productsRoute from "./routes/productsRoute.js"
-import { loggingMiddleware } from "./middlewares/logging.js"
+import productsRoute1 from "./routes/productsRoute1.js"
+import { loggingMiddleware } from "./middlewares/logging1.js"
 import { apiErrorHandler } from "./middlewares/error.js"
 import { routeNotFound } from "./middlewares/routeNotFound.js"
 
@@ -11,12 +11,14 @@ const app = express()
 
 app.use(express.json())
 
-app.get("/hello", loggingMiddleware, (_, res) => {
-  res.json({ msg: "hello, from Express.js!" })
-})
+// app.get("/hello", loggingMiddleware, (_, res) => {
+//   res.json({ msg: "hello, from Express.js!" })
+// })
+
+app.use(loggingMiddleware);
 
 app.use("/api/v1/items", itemsRoute)
-app.use("/api/v1/products", productsRoute)
+app.use("/api/v1/products", productsRoute1)
 
 app.use(apiErrorHandler)
 app.use(routeNotFound)
