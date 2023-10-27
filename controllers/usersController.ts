@@ -34,8 +34,8 @@ function login(
   res: Response,
   next: NextFunction
 ) {
-  const { password, email } = req.body;
-  const user = UserService.handleLogin(password, email);
+  const loginRequest = req.body;
+  const user = UserService.handleLogin(loginRequest);
   if (!user) {
     next(ApiError.unauthorized("Incorrect email or password"));
     return;

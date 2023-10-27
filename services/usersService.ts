@@ -1,5 +1,5 @@
 import { UsersRepo } from "../models/User.js";
-import { User, UserDTO } from "../types/user.js";
+import { LoginRequest, User, UserDTO } from "../types/user.js";
 import { generateId } from "../utils/generateId.js";
 
 const usersRepo = new UsersRepo();
@@ -14,12 +14,12 @@ function getUserById(userId: number): User | undefined {
   return user;
 }
 
-function handleLogin(password: string, email: string) {
-    const isUser = usersRepo.checkUserByEmailAndPassword(password, email);
+function handleLogin(loginRequest: LoginRequest) {
+    const isUser = usersRepo.checkUserByEmailAndPassword(loginRequest.password, loginRequest.email);
     if (!isUser) {
         return null;
     }
-    return usersRepo.getUserByEmailAndPassword(password, email);
+    return usersRepo.getUserByEmailAndPassword(loginRequest);
 }
 
 function createUser(user: UserDTO): User | null {

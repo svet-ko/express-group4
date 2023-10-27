@@ -1,4 +1,4 @@
-import { User } from "../types/user.js"
+import { LoginRequest, User } from "../types/user.js"
 
 export class UsersRepo {
   users: User[] = [
@@ -33,8 +33,8 @@ export class UsersRepo {
     return this.users.some(user => user.password === password && user.email === email);
   }
 
-  getUserByEmailAndPassword(password: string, email: string) {
-    return this.users.find(user => user.password === password && user.email === email);
+  getUserByEmailAndPassword(loginRequest: LoginRequest) {
+    return this.users.find(user => user.password === loginRequest.password && user.email === loginRequest.email);
   }
   
   createUser(newUser: User) {
