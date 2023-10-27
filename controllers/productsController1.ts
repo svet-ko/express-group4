@@ -3,8 +3,12 @@ import { NextFunction, Request, Response } from "express"
 import ProductsService from "../services/productsService1.js"
 import { ApiError } from "../errors/ApiError.js"
 
-export function findAllProduct(_: Request, res: Response) {
-  const products = ProductsService.findAll()
+export function findAllProduct(_: Request, res: Response, next: NextFunction) {
+  const products = ProductsService.findAll();
+  if (products.length === 0) {
+    next(ApiError.resourceNotFound("Products can't be fetched"));
+    return;
+  }
 
   res.json({ products })
 }
@@ -26,7 +30,7 @@ export function findOneProduct(
 }
 
 export function createOneProduct(req: Request, res: Response) {
-  const newProduct = req.body
+  const newProduct = req.body;
   const product = ProductsService.createOne(newProduct)
 
   res.status(201).json({ product })
