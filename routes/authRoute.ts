@@ -1,9 +1,9 @@
 import express from "express"
 import UsersController from "../controllers/usersController.js"
-import { validateUser } from "../middlewares/userValidate.js"
+import { validateLoginRequest } from "../middlewares/validateLoginRequest.js"
 
 const router = express.Router()
 
-router.get("/auth", validateUser, UsersController.login)
+router.post("/", validateLoginRequest, UsersController.login)
 
 export default router;

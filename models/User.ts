@@ -19,7 +19,6 @@ export class UsersRepo {
         avatar: ""
     }  
   ]
-
   
   getAllUsers() {
     return this.users
@@ -30,8 +29,12 @@ export class UsersRepo {
     return product
   }
 
-  checkUserByNameAndEmail(name: string, email: string){
-    return this.users.some(user => user.name === name && user.email === email);
+  checkUserByEmailAndPassword(password: string, email: string){
+    return this.users.some(user => user.password === password && user.email === email);
+  }
+
+  getUserByEmailAndPassword(password: string, email: string) {
+    return this.users.find(user => user.password === password && user.email === email);
   }
   
   createUser(newUser: User) {

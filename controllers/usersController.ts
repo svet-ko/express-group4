@@ -34,10 +34,10 @@ function login(
   res: Response,
   next: NextFunction
 ) {
-  const { name, email } = req.body;
-  const user = UserService.handleLogin(name, email);
+  const { password, email } = req.body;
+  const user = UserService.handleLogin(password, email);
   if (!user) {
-    next(ApiError.resourceNotFound("This user is not registered in the system yet, please sign up first"));
+    next(ApiError.unauthorized("Incorrect email or password"));
     return;
   }
   res.status(201).json({ user });

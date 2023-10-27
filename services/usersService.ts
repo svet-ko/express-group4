@@ -19,16 +19,19 @@ function getOneUser(userId: number): User | undefined {
   return user;
 }
 
-function handleLogin(name: string, email: string) {
-    // returns User | undefined
-    const isUser = usersRepo.checkUserByNameAndEmail(name, email);
+function handleLogin(password: string, email: string) {
+    const isUser = usersRepo.checkUserByEmailAndPassword(password, email);
+    if (!isUser) {
+        return null
+    }
+    return usersRepo.getUserByEmailAndPassword(password, email);
 }
 
 function createUser(user: UserDTO): User | null {
-    const isUser = usersRepo.checkUserByNameAndEmail(user.name, user.email);
+    const isUser = usersRepo.checkUserByEmailAndPassword(user.name, user.email);
     if (isUser) {
         return null;
-    }
+    } 
     const id = generateUserId();
     const userData = {id, ...user}; 
     const newUser = usersRepo.createUser(userData);

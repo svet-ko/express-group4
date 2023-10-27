@@ -4,6 +4,10 @@ export class ApiError {
     this.message = message
   }
 
+  static unauthorized(msg: string) {
+    return new ApiError(401, msg)
+  }
+
   static resourceNotFound(msg: string) {
     return new ApiError(404, msg)
   }
