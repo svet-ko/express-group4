@@ -7,13 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-<<<<<<< HEAD
-import { requestSchema } from "../schemas/productSchema.js";
-export function validateProduct(req, res, next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield requestSchema.parseAsync({
-=======
 import { z } from "zod";
 export const productSchema = z.object({
     body: z.object({
@@ -37,9 +30,7 @@ export const productSchema = z.object({
 export function validateProduct(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log('req.body', req.body);
             yield productSchema.parseAsync({
->>>>>>> dev
                 body: req.body,
                 query: req.query,
                 params: req.params,
