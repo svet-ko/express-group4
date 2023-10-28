@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 
-import ProductsService from "../services/productsService1.js"
+import ProductsService from "../services/productsService.js"
 import { ApiError } from "../errors/ApiError.js"
 
 export function findAllProduct(_: Request, res: Response, next: NextFunction) {

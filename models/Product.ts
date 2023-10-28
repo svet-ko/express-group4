@@ -1,5 +1,7 @@
-import { Product, VProduct } from "../types/products1.js";
+import { Category } from "../types/categories.js";
+import { Product, VProductToCreate } from "../types/products.js";
 import { generateId } from "../utils/generateId.js";
+import { CategoryRepo } from "./Category.js";
 
 export class ProductRepo {
   products: Product[] = [
@@ -9,7 +11,11 @@ export class ProductRepo {
       price: 60,
       description: "Cool hoodie for your good boy",
       images: ["https://i.imgur.com/p8AjjXS.jpeg"],
-      category: 17,
+      category: {
+        id: 17,
+        name: "Clothes",
+        description: "Clothes category"
+      },
     },
     {
       id: 2,
@@ -17,7 +23,11 @@ export class ProductRepo {
       price: 10,
       description: "A warm hoodie to keep your dog warm and cozy!",
       images: ["https://i.imgur.com/LlMBmIX.jpeg"],
-      category: 17,
+      category: {
+        id: 17,
+        name: "Clothes",
+        description: "Clothes category"
+      },
     },
   ]
 
@@ -30,11 +40,25 @@ export class ProductRepo {
     return this.products
   }
 
-  createOne(newProduct: VProduct) {
+  createOne(newProduct: VProductToCreate) {
     const id = generateId(this.products);
-    const product: Product = {id, ...newProduct};
-    this.products = [...this.products, product]
-    return product;
+    const categoriesRepo = new CategoryRepo()
+    const categories = categoriesRepo.getAll();
+    const categoriesIdList = categories.map(category => category.id);
+
+    if (categoriesIdList.includes(newProduct.categoryId)) {
+      const productCategory = categories.find(category => category.id === newProduct.categoryId)
+      let {categoryId, ...rest} = newProduct;
+      const product: Product = {
+        ...rest,
+        category: productCategory as Category,
+        id
+      }
+      this.products = [...this.products, product]
+      return product;
+    }
+    
+    return;
   }
 
   deleteOne(productId: number) {

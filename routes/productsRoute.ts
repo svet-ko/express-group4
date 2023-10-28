@@ -1,7 +1,7 @@
 import express from "express"
 
-import ProductController from "../controllers/productsController1.js"
-import { validateProduct } from "../middlewares/productValidate1.js"
+import ProductController from "../controllers/productsController.js"
+import { validateProduct } from "../middlewares/productValidate.js"
 
 const router = express.Router()
 router.get("/", ProductController.findAllProduct)

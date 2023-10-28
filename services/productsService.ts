@@ -1,5 +1,5 @@
 import { ProductRepo } from "../models/Product.js"
-import { VProduct } from "../types/products1.js"
+import { VProductToCreate } from "../types/products.js"
 
 const productsRepo = new ProductRepo()
 
@@ -14,7 +14,7 @@ function findOne(productId: number) {
   return product
 }
 
-function createOne(product: VProduct) {
+function createOne(product: VProductToCreate) {
   const newProduct = productsRepo.createOne(product)
 
   return newProduct
@@ -26,7 +26,7 @@ function deleteOne(productId: number) {
   return deletedProduct;
 }
 
-function updateOne(productId: number, updatesForProduct: Partial<VProduct>) {
+function updateOne(productId: number, updatesForProduct: Partial<VProductToCreate>) {
   const updatedProduct = productsRepo.updateOne(productId, updatesForProduct);
 
   return updatedProduct;

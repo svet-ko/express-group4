@@ -14,7 +14,9 @@ export const productSchema = z.object({
     description: z.string({
       required_error: "Description is required",
     }),
-    category: z.number().optional(),
+    categoryId: z.number({
+      required_error: "CategoryId is required",
+    }),
     image: z.string().optional(),
   })
 })
