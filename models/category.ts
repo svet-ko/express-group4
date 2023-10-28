@@ -1,5 +1,5 @@
 import { Category } from "../types/categories.js";
-import { generateNewId } from "../utils/generateNewId.js";
+import { generateId } from "../utils/generateId.js";
 
 export class CategoryRepo {
   categories: Category[] = [
@@ -37,7 +37,7 @@ export class CategoryRepo {
 
   // Create a new category
   createOne(newCategory: Category) {
-    const id = generateNewId(this.categories);
+    const id = generateId(this.categories);
     const categoryWithId = { ...newCategory, id };
     this.categories = [...this.categories, categoryWithId];
     return categoryWithId;

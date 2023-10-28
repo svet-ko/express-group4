@@ -1,4 +1,4 @@
-import { CategoryRepo } from "../models/category.js";
+import { CategoryRepo } from "../models/Category.js";
 import { Category } from "../types/categories.js";
 
 const categoriesRepo = new CategoryRepo();

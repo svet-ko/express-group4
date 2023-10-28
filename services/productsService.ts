@@ -1,4 +1,4 @@
-import { ProductRepo } from "../models/Product1.js"
+import { ProductRepo } from "../models/Product.js"
 import { VProduct } from "../types/products1.js"
 
 const productsRepo = new ProductRepo()

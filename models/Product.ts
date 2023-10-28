@@ -34,7 +34,6 @@ export class ProductRepo {
     const id = generateId(this.products);
     const product: Product = {id, ...newProduct};
     this.products = [...this.products, product]
-    console.log(this.products);
     return product;
   }
 
