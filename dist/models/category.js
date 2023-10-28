@@ -1,23 +1,18 @@
+import { generateNewId } from "../utils/generateNewId.js";
 export class CategoryRepo {
     constructor() {
         this.categories = [
             {
                 id: 1,
-                name: "Laptop",
-                description: "High-performance laptop for all your needs.",
+                name: "Electronics",
+                description: "This category encompasses devices that work with electronic technology. It includes items such as smartphones, laptops, cameras, TVs, and other gadgets",
             },
             {
                 id: 2,
-                name: "Smartphone",
-                description: "Latest smartphone with advanced features.",
+                name: "Clothing and Fashion",
+                description: " Apparel, accessories, and footwear fall under this category. It includes clothing items for men, women, and children, as well as various fashion accessories.",
             },
         ];
-    }
-    generateNewId() {
-        if (!this.categories.length)
-            return 1;
-        const maxId = Math.max(...this.categories.map((category) => category.id));
-        return maxId + 1;
     }
     // Get a category by ID
     getOne(categoryId) {
@@ -34,7 +29,7 @@ export class CategoryRepo {
     }
     // Create a new category
     createOne(newCategory) {
-        const id = this.generateNewId();
+        const id = generateNewId(this.categories);
         const categoryWithId = Object.assign(Object.assign({}, newCategory), { id });
         this.categories = [...this.categories, categoryWithId];
         return categoryWithId;
