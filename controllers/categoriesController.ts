@@ -79,7 +79,7 @@ export function deleteCategory(
       return;
     }
     CategoriesService.deleteCategory(categoryId);
-    res.status(204).send("Categoires deleted successfully");
+    res.status(200).json(category);
   } catch (error) {
     next(ApiError.internal("Internal server error"));
   }
