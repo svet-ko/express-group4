@@ -27,7 +27,7 @@ export async function validateProduct(
   next: NextFunction
 ) {
   try {
-    await requestSchema.parseAsync({
+    await productSchema.parseAsync({
       body: req.body,
       query: req.query,
       params: req.params,
