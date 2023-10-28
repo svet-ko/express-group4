@@ -27,7 +27,6 @@ export async function validateProduct(
   next: NextFunction
 ) {
   try {
-    console.log('req.body', req.body);
     await productSchema.parseAsync({
       body: req.body,
       query: req.query,

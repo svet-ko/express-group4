@@ -8,19 +8,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { z } from "zod";
-const productSchema = z.object({
+export const productSchema = z.object({
     body: z.object({
-        id: z.number({
-            required_error: "Id is required",
+        title: z.string({
+            required_error: "Title is required",
         }),
-        name: z.string({
-            required_error: "Name is required",
+        price: z
+            .number({
+            required_error: "Price is required",
+        })
+            .positive(),
+        description: z.string({
+            required_error: "Description is required",
         }),
-    }),
+        categoryId: z.number({
+            required_error: "CategoryId is required",
+        }),
+        image: z.string().optional(),
+    })
 });
 export function validateProduct(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            console.log('req.body', req.body);
             yield productSchema.parseAsync({
                 body: req.body,
                 query: req.query,

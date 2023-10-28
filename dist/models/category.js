@@ -1,4 +1,4 @@
-import { generateNewId } from "../utils/generateNewId.js";
+import { generateId } from "../utils/generateId.js";
 export class CategoryRepo {
     constructor() {
         this.categories = [
@@ -29,7 +29,7 @@ export class CategoryRepo {
     }
     // Create a new category
     createOne(newCategory) {
-        const id = generateNewId(this.categories);
+        const id = generateId(this.categories);
         const categoryWithId = Object.assign(Object.assign({}, newCategory), { id });
         this.categories = [...this.categories, categoryWithId];
         return categoryWithId;
