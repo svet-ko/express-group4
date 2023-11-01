@@ -31,6 +31,16 @@ export class ProductRepo {
     },
   ]
 
+  getProductCategoryById(categoryId: number): Category | undefined {
+    const categoriesRepo = new CategoryRepo()
+    const categories = categoriesRepo.getAll();
+    const categoriesIdList = categories.map(category => category.id);
+    if (categoriesIdList.includes(categoryId)) {
+      return categories.find(category => category.id === categoryId)
+    }
+    return
+  }
+
   findOne(productId: number) {
     const product = this.products.find((product) => product.id === productId)
     return product
@@ -42,12 +52,9 @@ export class ProductRepo {
 
   createOne(newProduct: VProductToCreate) {
     const id = generateId(this.products);
-    const categoriesRepo = new CategoryRepo()
-    const categories = categoriesRepo.getAll();
-    const categoriesIdList = categories.map(category => category.id);
+    const productCategory = this.getProductCategoryById(newProduct.categoryId);
 
-    if (categoriesIdList.includes(newProduct.categoryId)) {
-      const productCategory = categories.find(category => category.id === newProduct.categoryId)
+    if (!!productCategory) {
       let {categoryId, ...rest} = newProduct;
       const product: Product = {
         ...rest,
@@ -72,14 +79,31 @@ export class ProductRepo {
     return product
   }
 
-  updateOne(productId: number, updatesForProduct: Partial<Product>) {
+  updateOne(productId: number, updatesForProduct: Partial<VProductToCreate>) {
     let updatedProduct = undefined;
+    let productCategory: Category | undefined = undefined;
+
+    if (!!updatesForProduct.categoryId) {
+      productCategory = this.getProductCategoryById(updatesForProduct.categoryId)
+      if (!productCategory) { //checking whether category was found
+        return
+      }
+    }
 
     const updatedProducts = this.products.map((product) => {
       if (product.id === productId) {
-        updatedProduct = {
-          ...product,
-          ...updatesForProduct
+        if (productCategory) {
+          let {categoryId, ...rest} = updatesForProduct;
+          updatedProduct = {
+            ...product,
+            category: productCategory as Category,
+            ...rest
+          }
+        } else {
+          updatedProduct = {
+            ...product,
+            ...updatesForProduct
+          }
         }
         return updatedProduct;
       }
