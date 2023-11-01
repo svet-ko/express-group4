@@ -8,10 +8,7 @@ function getAllUsers(
   next: NextFunction
 ) {
   const users = UserService.getAllUsers();
-  if (users.length === 0) {
-    next(ApiError.resourceNotFound("Users can't be fetched"));
-    return;
-  }
+
   res.json({ users });
 }
 
