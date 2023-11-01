@@ -5,10 +5,6 @@ import { ApiError } from "../errors/ApiError.js"
 
 export function findAllProduct(_: Request, res: Response, next: NextFunction) {
   const products = ProductsService.findAll();
-  if (products.length === 0) {
-    next(ApiError.resourceNotFound("Products can't be fetched"));
-    return;
-  }
 
   res.json({ products })
 }
