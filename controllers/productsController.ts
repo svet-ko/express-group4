@@ -76,6 +76,11 @@ export function updateOneProduct(
     updatesForProduct
   );
 
+  if (!updatedProduct) {
+    next(ApiError.internal("Could not update product"));
+    return;
+  }
+
   res.json({ updatedProduct });
 }
 
