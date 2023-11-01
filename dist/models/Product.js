@@ -40,6 +40,15 @@ export class ProductRepo {
             },
         ];
     }
+    getProductCategoryById(categoryId) {
+        const categoriesRepo = new CategoryRepo();
+        const categories = categoriesRepo.getAll();
+        const categoriesIdList = categories.map(category => category.id);
+        if (categoriesIdList.includes(categoryId)) {
+            return categories.find(category => category.id === categoryId);
+        }
+        return;
+    }
     findOne(productId) {
         const product = this.products.find((product) => product.id === productId);
         return product;
@@ -49,11 +58,8 @@ export class ProductRepo {
     }
     createOne(newProduct) {
         const id = generateId(this.products);
-        const categoriesRepo = new CategoryRepo();
-        const categories = categoriesRepo.getAll();
-        const categoriesIdList = categories.map(category => category.id);
-        if (categoriesIdList.includes(newProduct.categoryId)) {
-            const productCategory = categories.find(category => category.id === newProduct.categoryId);
+        const productCategory = this.getProductCategoryById(newProduct.categoryId);
+        if (!!productCategory) {
             let { categoryId } = newProduct, rest = __rest(newProduct, ["categoryId"]);
             const product = Object.assign(Object.assign({}, rest), { category: productCategory, id });
             this.products = [...this.products, product];
@@ -72,9 +78,22 @@ export class ProductRepo {
     }
     updateOne(productId, updatesForProduct) {
         let updatedProduct = undefined;
+        let productCategory = undefined;
+        if (!!updatesForProduct.categoryId) {
+            productCategory = this.getProductCategoryById(updatesForProduct.categoryId);
+            if (!productCategory) { //checking whether category was found
+                return;
+            }
+        }
         const updatedProducts = this.products.map((product) => {
             if (product.id === productId) {
-                updatedProduct = Object.assign(Object.assign({}, product), updatesForProduct);
+                if (productCategory) {
+                    let { categoryId } = updatesForProduct, rest = __rest(updatesForProduct, ["categoryId"]);
+                    updatedProduct = Object.assign(Object.assign(Object.assign({}, product), { category: productCategory }), rest);
+                }
+                else {
+                    updatedProduct = Object.assign(Object.assign({}, product), updatesForProduct);
+                }
                 return updatedProduct;
             }
             return product;
