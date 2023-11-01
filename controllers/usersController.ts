@@ -20,7 +20,7 @@ function getUserById(
   const userId = Number(req.params.userId);
   const user = UserService.getUserById(userId);
   if (!user) {
-    next(ApiError.resourceNotFound("User not found."));
+    next(ApiError.resourceNotFound("User not found"));
     return;
   }
   res.json({ user });
@@ -77,7 +77,7 @@ function deleteUser(
       const id = Number(req.params.userId);
       const user = UserService.getUserById(id);
       if (!user) {
-        next(ApiError.resourceNotFound("User that you are trying to deleter does not exist")); 
+        next(ApiError.resourceNotFound("User that you are trying to delete does not exist")); 
         return;
       }
       UserService.deleteUser(id);
